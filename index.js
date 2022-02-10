@@ -17,6 +17,18 @@ app.get('/login', (req, res) => {
         });
 });
 
+app.get('/verify', (req, res) => {
+    client.verify
+        .services(config.serviceId)
+        .verificationChecks.create({
+            to: `+${req.query.phonenumber}`,
+            code: req.query.code,
+        })
+        .then((data) => {
+            res.status(200).send(data);
+        });
+});
+
 const port = process.env.PORT;
 app.listen(port, () => {
     console.log(`App listening at port ${port}`);
